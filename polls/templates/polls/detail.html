@@ -1,0 +1,108 @@
+<title>TEDy의 새 이름을 지어주세요!</title>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+<div class="overlay"></div>
+
+<div class="main">
+
+    <h1>TEDy의 새 이름을 지어주세요!</h1>
+    <p>보스턴 지역의 학생들이 모여 지식과 생각을 나누는 자리인 TEDy가 새로운 이름을 찾습니다.</p>
+    <div id="area-vote">
+    <h3>{{ poll.question }}</h3>
+    <div class="alert" id="alertVote"></div>
+    {% if error_message %}<div class="alert_django">{{ error_message }}</div>{% endif %}
+
+    <form name="formVote" action="{% url vote poll.id %}" method="post" onsubmit="return(validate_vote());">
+    {% csrf_token %}
+    {% for choice in poll.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+        <label for="choice{{ forloop.counter }}">
+            <span class="choice_text">{{ choice.choice_text }}</span> 
+            <span class="choice_desc">{{ choice.choice_desc }}</span>
+        </label><br />
+    {% endfor %}
+    <label for="voter">이메일</label>
+    <input type="text" name="voter_email" id="voter_email" /><br/>
+    <div class="alert" id="alertVoterEmail"></div>
+    <input type="submit" value="투표하기" />
+    <input type="checkbox" name="vote_subscribe_check" checked/>
+    <span class="subscribe">TEDy의 새로운 소식을 메일로 받아 봅니다.</span>
+    <br/>
+    </form>
+    </div>
+
+    <hr>
+    <div id="area-suggest">
+    <h3>보기에 없는 새로운 이름을 제안해 주세요.</h3>
+    <p>추천해 주신 이름은 이후 투표하는 분들께 보이게 되고,</br>
+       추천한 이름이 채택되는 분께는 아마존 상품권 $100 을 드립니다.</p>
+    {% if error_propose_message %}<div class="alert_django">{{ error_propose_message }}</div>{% endif %}
+
+    <form name="formSuggest" action="{% url add_choice poll.id %}" method="post" onsubmit="return(validate_suggest());">
+    {% csrf_token %}
+    <label for="proposer">이메일</label>
+    <input type="text" name="proposer" id="proposer" /><br/>
+    <div class="alert" id="alertSuggestProposer"></div>
+    <label for="choice_text">새로운 TEDy의 이름</label>
+    <input type="text" name="choice_text" id="choice_text" /><br/>
+    <div class="alert" id="alertSuggestText"></div>
+    <label for="choice_desc">이름에 대한 설명</label>
+    <input type="text" name="choice_desc" id="choice_desc" /><br/>
+    <div class="alert" id="alertSuggestDesc"></div>
+    <input type="submit" value="제안하기" />
+    <input type="checkbox" name="suggest_subscribe_check" checked/>
+    <span class="subscribe">TEDy의 새로운 소식을 메일로 받아 봅니다.</span>
+    <br/>
+    </form>
+    </div>
+    <footer><a href="https://www.facebook.com/pages/TEDy-Boston/107741892630460">TEDy Facebook</a> |  문의 사항은 <a href="mailto:juho@juhokim.com">juho@juhokim.com</a> 으로 연락 주세요.</footer>
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+function validateRadio(radios){
+    for (var i=0; i<radios.length; i++){
+        if (radios[i].checked)
+            return true;
+    }
+    return false;
+}
+
+function validate_vote(){
+    if (!validateEmail(document.formVote.voter_email.value)){
+        $("#alertVoterEmail").show().text("이메일 형식이 올바르지 않습니다.");
+        return false;
+    }
+    $("#alertVoterEmail").hide();
+    if (!validateRadio(document.formVote.choice)){
+        $("#alertVote").show().text("마음에 드는 이름을 선택해 주세요.");
+        return false;
+    }	
+    $("#alertVote").hide();
+    return true;
+}
+
+function validateEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+} 
+
+function validate_suggest(){
+    if (!validateEmail(document.formSuggest.proposer.value)){
+        $("#alertSuggestProposer").show().text("이메일 형식이 올바르지 않습니다.");
+        return false;
+    }
+    $("#alertSuggestProposer").hide();
+    if (document.formSuggest.choice_text.value == ""){
+        $("#alertSuggestText").show().text("이름을 제안해주세요.");
+        return false;
+    }	
+    $("#alertSuggestText").hide();
+    if (document.formSuggest.choice_desc.value == ""){
+        $("#alertSuggestDesc").show().text("이름에 대한 간단한 설명을 해주세요.");
+        return false;
+    }	
+    $("#alertSuggestDesc").hide();
+    return true;
+}
+</script>

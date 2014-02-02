@@ -1,0 +1,91 @@
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+body {
+    font-family: "Nanum Gothic", sans-serif;
+    margin: 3em;
+    background:url('tedy-kickoff.jpg') rgba(0,0,0,0) no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.choice_text {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.choice_desc {
+    font-size: 0.8em;
+}
+
+.subscribe, footer {
+    font-size: 0.8em;
+}
+
+.alert{
+    display:none;
+}
+
+.alert, .alert_django{
+    padding: 1em;
+    background: red;
+    color: white;
+}
+/*
+.overlay {
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    background:url('tedy-kickoff.jpg') rgba(0,0,0,0) no-repeat center fixed;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.5; 
+    display: block;
+    z-index: 101;
+}
+*/
+
+.main {
+    background-color: #f8f8f8;
+    opacity: 0.9;
+    z-index: 1020;
+    padding: 1em 3em;
+    z-index: 101;
+    width: 450px;
+}
+
+input {
+    margin: 1em;
+}
+
+#area-vote label {
+    cursor:pointer;
+}
+
+#area-suggest label {
+    width: 150px;
+    display: inline-block;
+}
+
+
+input[type=text] {
+    height: 30px;
+    width: 260px;
+    font-size: 18px;
+}
+
+input[type=submit] {
+    font-size: 1.5em;
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+input[type=submit]:hover {
+    background:#A2D927;
+}

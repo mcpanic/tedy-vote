@@ -1,0 +1,15 @@
+<title>투표에 참여해 주셔서 감사합니다 :)</title>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<div class="main">
+<h2>투표에 참여해 주셔서 감사합니다 :)</h2>
+<p>
+새로운 이름은 온라인 투표와 올해 첫모임에서의 현장 투표를 <br/>합산해 결정됩니다.
+</p>
+<ul>
+{% for choice in poll.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+</div>
