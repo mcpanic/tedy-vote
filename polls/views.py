@@ -35,14 +35,10 @@ def vote(request, poll_id):
             subscribe_check = True
         else:
             subscribe_check = False
-        print subscribe_check
-        print request.POST['voter_email']
-        print p, selected_choice
         new_voter = Voter(poll=p, 
                     choice=selected_choice, 
                     email=request.POST['voter_email'], 
                     subscription=subscribe_check)
-        print vars(new_voter)
         new_voter.save()
     except Exception as err:
         print err.message, type(err)
@@ -79,8 +75,8 @@ def add_choice(request, poll_id):
                     email=request.POST['proposer'], 
                     subscription=subscribe_check)
         new_voter.save()
-    except:
-        print "some error"
+    except Exception as err:
+        print err.message, type(err)
 
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a
