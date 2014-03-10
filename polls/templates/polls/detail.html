@@ -14,6 +14,9 @@
 
     <form name="formVote" action="{% url vote poll.id %}" method="post" onsubmit="return(validate_vote());">
     {% csrf_token %}
+    <label id="voter_email_label" for="voter">이메일</label>
+    <input type="text" name="voter_email" id="voter_email" /><br/>
+    <div class="alert" id="alertVoterEmail"></div>
     {% for choice in poll.choice_set.all %}
         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
         <label for="choice{{ forloop.counter }}">
@@ -21,12 +24,9 @@
             <span class="choice_desc">{{ choice.choice_desc }}</span>
         </label><br />
     {% endfor %}
-    <label for="voter">이메일</label>
-    <input type="text" name="voter_email" id="voter_email" /><br/>
-    <div class="alert" id="alertVoterEmail"></div>
     <input type="submit" value="투표하기" />
     <input type="checkbox" name="vote_subscribe_check" checked/>
-    <span class="subscribe">TEDy의 새로운 소식을 메일로 받아 봅니다.</span>
+    <span class="subscribe">TEDy의 소식을 메일로 받아 봅니다.</span>
     <br/>
     </form>
     </div>
@@ -51,7 +51,7 @@
     <div class="alert" id="alertSuggestDesc"></div>
     <input type="submit" value="제안하기" />
     <input type="checkbox" name="suggest_subscribe_check" checked/>
-    <span class="subscribe">TEDy의 새로운 소식을 메일로 받아 봅니다.</span>
+    <span class="subscribe">TEDy의 소식을 메일로 받아 봅니다.</span>
     <br/>
     </form>
     </div>

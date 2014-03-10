@@ -64,7 +64,7 @@ input {
     cursor:pointer;
 }
 
-#area-suggest label {
+#voter_email_label, #area-suggest label {
     width: 150px;
     display: inline-block;
 }
